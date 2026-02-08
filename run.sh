@@ -21,6 +21,9 @@ cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
 echo "Building project..."
 cmake --build build
-
 echo "Running atomic-vec..."
+
+sleep 1
+clear
+
 ./build/atomic-vec

@@ -8,7 +8,7 @@ int main() {
     std::uint64_t T1_id = tm.begin();
     std::uint64_t T2_id = tm.begin();
 
-    bool is_visible = tm.is_visible(T1_id, T2_id);
+    bool is_visible = tm.is_writer_visible_to_reader(T2_id, T1_id);
 
     std::cout << "----------------------------------------" << std::endl;
     std::cout << "[T1 ≠ T2]\n";

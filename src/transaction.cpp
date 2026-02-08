@@ -24,8 +24,7 @@ void TransactionManager::rollback(std::uint64_t transaction_id) {
     }
 }
 
-// Checks if the writer transaction is visible to the reader transaction
-bool TransactionManager::is_visible(std::uint64_t reader_transaction_id, std::uint64_t writer_transaction_id) {
+bool TransactionManager::is_writer_visible_to_reader(std::uint64_t writer_transaction_id, std::uint64_t reader_transaction_id) {
     if (reader_transaction_id == writer_transaction_id) {
         return true;
     } else if (committed_transactions.count(writer_transaction_id)) {

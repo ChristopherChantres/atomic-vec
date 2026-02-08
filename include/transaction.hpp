@@ -6,10 +6,10 @@
 
 /*
 Methods:
-    - begin(): Creates a new transaction ID and adds it to the active transactions set.
-    - commit(int transaction_id): Adds the transaction ID to the committed transactions set.
-    - abort(int transaction_id): Adds the transaction ID to the aborted transactions set.
-    - is_visible(int reader_transaction_id, int writer_transaction_id): Checks if the writer transaction is visible to the reader transaction.
+    - `begin()`: Creates a new transaction ID and adds it to the active transactions set.
+    - `commit(uint64_t transaction_id)`: Adds the transaction ID to the committed transactions set.
+    - `rollback(uint64_t transaction_id)`: Adds the transaction ID to the aborted transactions set.
+    - `is_writer_visible_to_reader(uint64_t writer_transaction_id, uint64_t reader_transaction_id)`: Determines if a version written by writer_transaction_id should be visible to reader_transaction_id, supporting MVCC (Multi-Version Concurrency Control) semantics for consistent non-blocking reads.
 */
 class TransactionManager {
 private:
@@ -23,5 +23,5 @@ public:
     std::uint64_t begin();
     void commit(std::uint64_t transaction_id);
     void rollback(std::uint64_t transaction_id);
-    bool is_visible(std::uint64_t reader_transaction_id, std::uint64_t writer_transaction_id);
+    bool is_writer_visible_to_reader(std::uint64_t writer_transaction_id, std::uint64_t reader_transaction_id);
 };
