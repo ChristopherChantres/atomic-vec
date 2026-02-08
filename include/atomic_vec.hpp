@@ -6,6 +6,16 @@
 #include <vector>
 #include "transaction.hpp"
 
+/*
+VersionedVector represents a single row that supports multi-version concurrency control (MVCC).
+Each version of the row is associated with a transaction ID and a vector of floats.
+
+Methods:
+- `write_row(TransactionManager& tm, std::uint64_t transaction_id, std::vector<float> new_vector)`:
+    Writes a new version if no conflict; returns true on success, false on conflict.
+- `read_row(TransactionManager& tm, std::uint64_t transaction_id)`:
+    Reads the visible version for the transaction; returns data or an empty vector.
+*/
 class VersionedVector {
 private:
     std::mutex row_lock; // It will prevent multiple writers from writing to the same row at the same time
@@ -15,8 +25,12 @@ public:
     std::vector<float> read_row(TransactionManager& tm, std::uint64_t transaction_id);
 };
 
+
 /*
-Documentation
+VectorStore manages a collection of VersionedVectors (rows), identified by unique IDs, supporting concurrent multi-versioned access for transactional operations.
+
+Methods:
+- `get_row(std::uint64_t vector_id)`: Returns a shared pointer to a VersionedVector associated with vector_id. If the row does not exist, an empty one is created.
 */
 class VectorStore {
 private:
